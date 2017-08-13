@@ -30,6 +30,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     slop (3.6.0)
+    sqlite3 (1.3.13)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
@@ -39,8 +40,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  mechanize (= 2.7.5)
+  mechanize (~> 2.7.5)
   pry
+  sqlite3 (~> 1.3.13)
 
 BUNDLED WITH
    1.15.3

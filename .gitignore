@@ -1,3 +1,5 @@
-/feeds/*
-!/feeds/.keep
+/seeds/*
+!/seeds/.keep
+/db/*
+!/db/.keep
 config.yml

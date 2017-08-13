@@ -1,13 +1,10 @@
 require 'rubygems'
 require 'bundler/setup'
-
-require 'pry'
-
 require 'yaml'
 require 'kijiji'
+require 'pry'
 
 config = YAML.load(File.read('config.yml'))
-
 home_page = Kijiji::Pages::Home.new(uri: URI.parse(config['url']))
 category_page = home_page.category(category: %r{#{config['category']}})
 
@@ -16,7 +13,6 @@ paging_max = config['paging_max']
 filter = "r#{config['radius']}?" +
          "ad=#{config['ad']}&" +
          "price=#{config['price_min']}__#{config['price_max']}&" +
-         "for-rent-by=#{config['for_rent_by']}&" +
          "furnished=#{config['furnished']}"
 ads = []
 
@@ -34,13 +30,13 @@ loop do
 end
 
 ads.each do |ad|
-  output = []
-  output << ad.postal_code.to_s.ljust(7)
-  output << ('%.2f' % (ad.price || 0)).ljust(7)
-  output << ad.phone.to_s.ljust(17)
-  output << ad.age_in_hours.to_s.ljust(4)
-  output << ad.uri
-  STDOUT.puts output.join("\t")
+  if Kijiji::DB::Ad.new(ad.to_h).insert
+    STDOUT.puts ad
+    STDERR.print '*'
+  else
+    STDERR.print '.'
+  end
 end
+STDERR.print "\n"
 
 exit(0)

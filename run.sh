@@ -1,5 +1,10 @@
 #!/bin/bash
 
-feed="feed-`date +%s`.txt"
-ruby -Ilib feed.rb > ./feeds/$feed
-cat ./feeds/$feed
+if ! [ -f "./db/kijiji.sqlite3" ]
+then
+  ruby -Ilib setup.rb
+fi
+
+seed="seed-`date +%s`.txt"
+ruby -Ilib seed.rb 1>./seeds/$seed
+cat ./seeds/$seed
