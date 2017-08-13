@@ -1,0 +1,9 @@
+url: 'https://www.kijiji.ca'
+category: 'apartments,.+condos'
+price_min: 1500
+price_max: 3000
+paging_max: 10
+radius: 10.0
+ad: 'offering'
+furnished: 0
+for_rent_by: ownr
