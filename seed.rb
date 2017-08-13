@@ -10,10 +10,10 @@ category_page = home_page.category(category: %r{#{config['category']}})
 
 paging = 1
 paging_max = config['paging_max']
-filter = "r#{config['radius']}?" +
-         "ad=#{config['ad']}&" +
-         "price=#{config['price_min']}__#{config['price_max']}&" +
-         "furnished=#{config['furnished']}"
+filter = "r#{config['radius']}" +
+         "?ad=#{config['ad']}" +
+         "&price=#{config['price_min']}__#{config['price_max']}" +
+         "&furnished=#{config['furnished']}"
 ads = []
 
 loop do
