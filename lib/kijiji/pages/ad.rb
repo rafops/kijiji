@@ -6,17 +6,17 @@ class Kijiji::Pages::Ad < Kijiji::Pages::Base
     }.call
   end
 
-  def postal_code
-    @postal_code ||= lambda {
+  def postal_code_6
+    @postal_code_6 ||= lambda {
       return unless location
       postal_code = location.match(/([A-Z][\d][A-Z])[^\d]{0,1}([\d][A-Z][\d])/)
-      postal_code[1..2].join(' ') if postal_code
+      postal_code[1..2].join('') if postal_code
     }.call
   end
 
-  def postal_code_6
-    return unless postal_code
-    @postal_code_6 ||= postal_code.sub(' ', '')
+  def postal_code
+    return unless postal_code_6
+    @postal_code ||= postal_code.split(/(?<=\G...)/).join(' ')
   end
 
   def description
@@ -82,7 +82,7 @@ class Kijiji::Pages::Ad < Kijiji::Pages::Base
 
   def to_s
     output = []
-    output << postal_code.to_s.ljust(7)
+    output << postal_code_6.to_s.ljust(6)
     output << price_round.to_s.rjust(11)
     output << phone.to_s.ljust(17)
     output << age_in_hours.to_s.rjust(4)
