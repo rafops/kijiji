@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'kijiji'
+require 'db'
 require 'pry'
 
-Kijiji::DB.setup
+DB.setup
 
 exit(0)

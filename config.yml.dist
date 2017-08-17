@@ -4,5 +4,8 @@ price_min: 1500
 price_max: 3000
 paging_max: 10
 radius: 10.0
+address: 'H0H0H0'
+latitude: 43.123456
+longitude: -79.123456
 ad: 'offering'
 furnished: 0

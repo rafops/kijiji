@@ -1,6 +1,6 @@
-class Kijiji::DB::Ad
+class DB::Ad
   TABLE = 'ads'
-  KEY_ATTRIBUTES = ['postal_code_6', 'phone_number']
+  KEY_ATTRIBUTES = ['url']
   REQUIRED_ATTRIBUTES = KEY_ATTRIBUTES + ['price']
 
   attr_reader :attributes
@@ -11,7 +11,7 @@ class Kijiji::DB::Ad
   end
 
   def insert
-    Kijiji::DB.insert(table: TABLE, attributes: attributes) if valid? and not duplicate?
+    DB.insert(table: TABLE, attributes: attributes) if valid? and not duplicate?
   end
 
   def valid?
@@ -23,6 +23,6 @@ class Kijiji::DB::Ad
   end
 
   def duplicate?
-    Kijiji::DB.query(table: TABLE, attributes: key_attributes).any?
+    DB.query(table: TABLE, attributes: key_attributes).any?
   end
 end

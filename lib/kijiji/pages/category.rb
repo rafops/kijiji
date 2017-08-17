@@ -12,6 +12,7 @@ class Kijiji::Pages::Category < Kijiji::Pages::Base
       path += ["page-#{paging}", last]
     end
 
+    uri.query = nil
     uri.path = path.join('/')
     uri = URI.parse(uri.to_s + filter) if filter
 

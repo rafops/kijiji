@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! [ -f "./db/kijiji.sqlite3" ]
+if ! [ -f "./db/db.sqlite3" ]
 then
   ruby -Ilib setup.rb
 fi

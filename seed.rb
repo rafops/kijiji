@@ -1,18 +1,26 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'yaml'
+require 'db'
 require 'kijiji'
+require 'craigslist'
 require 'pry'
 
 config = YAML.load(File.read('config.yml'))
+
+## KIJIJI
+
 home_page = Kijiji::Pages::Home.new(uri: URI.parse(config['url']))
 category_page = home_page.category(category: %r{#{config['category']}})
 
 paging = 1
 paging_max = config['paging_max']
+
 filter = "r#{config['radius']}" +
          "?ad=#{config['ad']}" +
          "&price=#{config['price_min']}__#{config['price_max']}" +
+         "&address=#{config['address']}" +
+         "&ll=#{config['latitude']},#{config['longitude']}" +
          "&furnished=#{config['furnished']}"
 ads = []
 
@@ -30,7 +38,26 @@ loop do
 end
 
 ads.each do |ad|
-  if Kijiji::DB::Ad.new(ad.to_h).insert
+  if DB::Ad.new(ad.to_h).insert
+    STDOUT.puts ad
+    STDERR.print '*'
+  else
+    STDERR.print '.'
+  end
+end
+STDERR.print "\n"
+
+## CRAIGSLIST
+
+filter = "?search_distance=#{config['radius']}" +
+         "&postal=#{config['address']}" +
+         "&min_price=#{config['price_min']}" +
+         "&max_price=#{config['price_max']}" +
+         "&availabilityMode=0"
+category_page = Craigslist::Pages::Category.new(uri: URI.parse('https://toronto.craigslist.ca/search/apa' + filter))
+
+category_page.ads.each do |ad|
+  if DB::Ad.new(ad.to_h).insert
     STDOUT.puts ad
     STDERR.print '*'
   else
