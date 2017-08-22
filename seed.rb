@@ -1,20 +1,19 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'yaml'
+require 'configurator'
+require 'navigator'
 require 'db'
 require 'kijiji'
 require 'craigslist'
 require 'pry'
 
-config = YAML.load(File.read('config.yml'))
+config = Configurator.instance
 
 ## KIJIJI
 
 home_page = Kijiji::Pages::Home.new(uri: URI.parse(config['url']))
 category_page = home_page.category(category: %r{#{config['category']}})
-
-paging = 1
-paging_max = config['paging_max']
 
 filter = "r#{config['radius']}" +
          "?ad=#{config['ad']}" +
@@ -22,6 +21,10 @@ filter = "r#{config['radius']}" +
          "&address=#{config['address']}" +
          "&ll=#{config['latitude']},#{config['longitude']}" +
          "&furnished=#{config['furnished']}"
+
+paging = 1
+paging_max = config['paging_max']
+
 ads = []
 
 loop do
@@ -38,7 +41,9 @@ loop do
 end
 
 ads.each do |ad|
-  if DB::Ad.new(ad.to_h).insert
+  if ad.reject?
+    STDERR.print 'x'
+  elsif DB::Ad.new(ad.to_h).insert
     STDOUT.puts ad
     STDERR.print '*'
   else
@@ -57,7 +62,9 @@ filter = "?search_distance=#{config['radius']}" +
 category_page = Craigslist::Pages::Category.new(uri: URI.parse('https://toronto.craigslist.ca/search/apa' + filter))
 
 category_page.ads.each do |ad|
-  if DB::Ad.new(ad.to_h).insert
+  if ad.reject?
+    STDERR.print 'x'
+  elsif DB::Ad.new(ad.to_h).insert
     STDOUT.puts ad
     STDERR.print '*'
   else

@@ -1,4 +1,4 @@
-url: 'https://www.kijiji.ca'
+url: 'https://www.kijiji.ca/h-city-of-toronto/1700273'
 category: 'apartments,.+condos'
 price_min: 1500
 price_max: 3000
@@ -9,3 +9,4 @@ latitude: 43.123456
 longitude: -79.123456
 ad: 'offering'
 furnished: 0
+reject: 'basement,detached'

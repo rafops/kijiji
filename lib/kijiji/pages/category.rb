@@ -1,4 +1,4 @@
-class Kijiji::Pages::Category < Kijiji::Pages::Base
+class Kijiji::Pages::Category < Navigator
   attr_reader :paging
   
   def initialize(uri:, filter: nil, paging: 1)

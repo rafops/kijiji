@@ -1,4 +1,4 @@
-class Kijiji::Pages::Ad < Kijiji::Pages::Base
+class Kijiji::Pages::Ad < Navigator
   def location
     @location ||= lambda {
       span = page.search("//span[contains(@class, 'address-')]").first

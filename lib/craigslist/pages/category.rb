@@ -1,4 +1,4 @@
-class Craigslist::Pages::Category < Craigslist::Pages::Base
+class Craigslist::Pages::Category < Navigator
   attr_reader :paging
   
   def initialize(uri:)

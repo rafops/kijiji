@@ -1,4 +1,4 @@
-class Kijiji::Pages::Home < Kijiji::Pages::Base
+class Kijiji::Pages::Home < Navigator
   def initialize(uri:)
     super(uri: uri)
   end

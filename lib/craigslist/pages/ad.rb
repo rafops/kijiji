@@ -1,6 +1,6 @@
 require 'digest'
 
-class Craigslist::Pages::Ad < Craigslist::Pages::Base
+class Craigslist::Pages::Ad < Navigator
   def location
     @location ||= lambda {
       div = page.search('div.mapaddress')
