@@ -46,6 +46,9 @@ ads.each do |ad|
   elsif DB::Ad.new(ad.to_h).insert
     STDOUT.puts ad
     STDERR.print '*'
+  elsif ad.accept?
+    STDOUT.puts ad
+    STDERR.print '@'
   else
     STDERR.print '.'
   end
@@ -67,6 +70,9 @@ category_page.ads.each do |ad|
   elsif DB::Ad.new(ad.to_h).insert
     STDOUT.puts ad
     STDERR.print '*'
+  elsif ad.accept?
+    STDOUT.puts ad
+    STDERR.print '@'
   else
     STDERR.print '.'
   end

@@ -9,8 +9,11 @@ class Craigslist::Pages::Category < Navigator
     page.search('li.result-row').map do |li|
       ad_uri = uri.dup
       ad_uri.query = nil
-      ad_uri.path = li.search('a').first.attr('href')
-      Craigslist::Pages::Ad.new(uri: ad_uri)
-    end
+      begin
+        ad_uri.path = li.search('a').first.attr('href')
+        Craigslist::Pages::Ad.new(uri: ad_uri)
+      rescue
+      end
+    end.compact
   end
 end

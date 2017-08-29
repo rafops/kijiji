@@ -10,3 +10,4 @@ longitude: -79.123456
 ad: 'offering'
 furnished: 0
 reject: 'basement,detached'
+accept: 'apartment,downtown'
