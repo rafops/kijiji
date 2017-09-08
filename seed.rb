@@ -46,6 +46,8 @@ ads.each do |ad|
   elsif DB::Ad.new(ad.to_h).insert
     STDOUT.puts ad
     STDERR.print '*'
+  elsif (ad.age_in_hours || 0) > config['reject_older_than']
+    STDERR.print '#'
   elsif ad.accept?
     STDOUT.puts ad
     STDERR.print '@'
@@ -70,6 +72,8 @@ category_page.ads.each do |ad|
   elsif DB::Ad.new(ad.to_h).insert
     STDOUT.puts ad
     STDERR.print '*'
+  elsif (ad.age_in_hours || 0) > config['reject_older_than']
+    STDERR.print '#'
   elsif ad.accept?
     STDOUT.puts ad
     STDERR.print '@'
