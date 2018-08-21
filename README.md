@@ -9,7 +9,7 @@ docker build -t kijiji .
 ## Example
 
 ```
-docker run \
+docker run --rm \
   -e PRICE_MIN=1500 \
   -e PRICE_MAX=3000 \
   -e RADIUS=10.0 \
