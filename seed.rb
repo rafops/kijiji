@@ -44,36 +44,11 @@ ads.each do |ad|
   if ad.reject?
     STDERR.print 'x'
   elsif DB::Ad.new(ad.to_h).insert
-    STDOUT.puts ad
-    STDERR.print '*'
-  elsif (ad.age_in_hours || 0) > config['reject_older_than']
-    STDERR.print '#'
-  elsif ad.accept?
-    STDOUT.puts ad
-    STDERR.print '@'
-  else
-    STDERR.print '.'
-  end
-end
-STDERR.print "\n"
-
-## CRAIGSLIST
-
-filter = "?search_distance=#{config['radius']}" +
-         "&postal=#{config['address']}" +
-         "&min_price=#{config['price_min']}" +
-         "&max_price=#{config['price_max']}" +
-         "&availabilityMode=0"
-category_page = Craigslist::Pages::Category.new(uri: URI.parse('https://toronto.craigslist.ca/search/apa' + filter))
-
-category_page.ads.each do |ad|
-  if ad.reject?
-    STDERR.print 'x'
-  elsif DB::Ad.new(ad.to_h).insert
-    STDOUT.puts ad
-    STDERR.print '*'
-  elsif (ad.age_in_hours || 0) > config['reject_older_than']
-    STDERR.print '#'
+    if (ad.age_in_hours.to_i) <= config['reject_older_than'].to_i
+      STDOUT.puts ad
+    else
+      STDERR.print '#'
+    end
   elsif ad.accept?
     STDOUT.puts ad
     STDERR.print '@'

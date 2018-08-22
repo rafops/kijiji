@@ -3,4 +3,4 @@ COPY . /root/kijiji
 COPY ./config.yml.dist /root/kijiji/config.yml
 WORKDIR /root/kijiji
 RUN bundle
-ENTRYPOINT ["/bin/bash", "./run.sh"]
+ENTRYPOINT ["/bin/sh", "./run.sh"]
