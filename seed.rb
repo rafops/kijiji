@@ -23,7 +23,7 @@ filter = "r#{config['radius']}" +
          "&furnished=#{config['furnished']}"
 
 paging = 1
-paging_max = config['paging_max']
+paging_max = config['paging_max'].to_i
 
 ads = []
 
