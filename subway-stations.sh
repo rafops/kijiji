@@ -16,5 +16,5 @@ while read station line lat lon zip ; do
     -e REJECT=basement \
     -e REJECT_OLDER_THAN=48 \
     -e ACCEPT="" \
-    -v ${PWD}:/root/kijiji kijiji
+    -v ${PWD}:/root/workdir kijiji
 done < subway-stations.csv

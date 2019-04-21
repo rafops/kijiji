@@ -3,3 +3,4 @@
 /db/*
 !/db/.keep
 config.yml
+!config.yml.dist
