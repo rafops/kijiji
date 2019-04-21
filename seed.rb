@@ -5,22 +5,24 @@ require 'configurator'
 require 'navigator'
 require 'db'
 require 'kijiji'
-require 'craigslist'
 require 'pry'
 
 config = Configurator.instance
 
-## KIJIJI
-
 home_page = Kijiji::Pages::Home.new(uri: URI.parse(config['url']))
 category_page = home_page.category(category: %r{#{config['category']}})
 
-filter = "r#{config['radius']}" +
-         "?ad=#{config['ad']}" +
-         "&price=#{config['price_min']}__#{config['price_max']}" +
-         "&address=#{config['address']}" +
-         "&ll=#{config['latitude']},#{config['longitude']}" +
-         "&furnished=#{config['furnished']}"
+filter = ""
+filter+= "r#{config['radius']}" if config['radius']
+
+params = []
+params<< "ad=#{config['ad']}"                                   if config['ad']
+params<< "price=#{config['price_min']}__#{config['price_max']}" if config['price_min'] and config['price_max']
+params<< "&address=#{config['address']}"                        if config['address']
+params<< "&ll=#{config['latitude']},#{config['longitude']}"     if config['latitude'] and config['longitude']
+params<< "&furnished=#{config['furnished']}"                    if config['furnished']
+
+filter+= '?' + params.join('&') unless params.empty?
 
 paging = 1
 paging_max = config['paging_max'].to_i

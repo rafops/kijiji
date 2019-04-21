@@ -1,6 +1,9 @@
-FROM ruby:2.4
-COPY . /root/kijiji
-COPY ./config.yml.dist /root/kijiji/config.yml
-WORKDIR /root/kijiji
+FROM ruby:2.6
+RUN apt-get update \
+      && apt-get install -y sqlite3 \
+      && rm -rf /var/lib/apt/lists/*
+RUN mkdir /root/workdir
+COPY Gemfile* /root/workdir/
+WORKDIR /root/workdir
 RUN bundle
-ENTRYPOINT ["/bin/sh", "./run.sh"]
+CMD ["/bin/sh", "./boot.sh"]

@@ -1,10 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
-if ! [ -f "./db/db.sqlite3" ]
-then
-  ruby -Ilib setup.rb
+set -Eeuo pipefail
+
+if [ -z "`docker image ls -q kijiji`" ] ; then
+  ./build.sh
 fi
 
-seed="seed-`date +%s`.txt"
-ruby -Ilib seed.rb 1>./seeds/$seed
-cat ./seeds/$seed
+if ! [ -f "./config.yml" ]
+then
+  cp -av ./config.yml.dist ./config.yml
+fi
+
+docker run -it --rm \
+  -v "`pwd`":/root/workdir kijiji
