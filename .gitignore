@@ -4,3 +4,4 @@
 !/db/.keep
 config.yml
 config.yml-*
+find-*.sh
