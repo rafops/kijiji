@@ -6,8 +6,8 @@ while read station line lat lon zip ; do
   echo $station
   echo "================================"
   docker run --rm \
-    -e PRICE_MIN=1500 \
-    -e PRICE_MAX=2500 \
+    -e PRICE_MIN=1300 \
+    -e PRICE_MAX=1700 \
     -e PAGING_MAX=3 \
     -e RADIUS=1.0 \
     -e ADDRESS=$zip \
