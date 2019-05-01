@@ -9,6 +9,8 @@ module DB
 
     def db
       @db ||= SQLite3::Database.new(FILE)
+      @db.busy_timeout = 15000
+      @db
     end
 
     def insert(table:, attributes:)
